@@ -9,9 +9,6 @@ import subprocess
 cf = open("callfiles", "r")
 birdcalls = np.array(cf.read().splitlines())
 cf.close()
-# birdcalls = pd.read_table("callfiles", header=None).as_matrix()
-
-#last = pd.read_table("last", header=None).as_matrix()[0][0]
 
 lf = open("last", "r+w")
 last = lf.read().splitlines()[0]
