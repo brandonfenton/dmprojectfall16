@@ -13,7 +13,7 @@ opts_chunk$set(echo = TRUE, comment = NA, width = 80,
                dev.args = list(family = 'Helvetica', pointsize = 11))
 knit_theme$set('print')
 
-centroids <- read.csv("centroids.csv")
+centroids <- read.csv("centroids.csv", header=F)
 birdsfilt <- read.csv("Birds_Filtered_2.csv")
 
 require(xtable)
@@ -35,8 +35,9 @@ print(samp.out, file="samp.tex")
 <<<kmeans>>>=
 
 kmean.out <- kmeans(centroids, centers=98)
+kmean.fam <- kmeans(centroids, centers=26)
 kmean.clust <- kmean.out$cluster
-
+table(birdsfilt$GenusSpecies,kmean.clust)
 
 
 @
@@ -44,8 +45,11 @@ kmean.clust <- kmean.out$cluster
 
 %%%pam section
 <<<pam>>>=
+require(cluster)
 
-
+pam.out <- pam(centroids, k=98, diss=F)
+pam.clust <- pam.out$clustering
+table(birdsfilt$GenusSpecies,pam.clust)
 
 @
 
@@ -54,7 +58,8 @@ kmean.clust <- kmean.out$cluster
 %%%hclust section
 <<<hclust>>>=
 
-
+hclust.out <- hclust(dist(centroids))
+hclust.clust <- cutree(hclust.out, 98)
 
 @
 
