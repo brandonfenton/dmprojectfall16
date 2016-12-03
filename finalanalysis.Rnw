@@ -41,10 +41,11 @@ print(samp.out, file="samp.tex")
 
 %%%kmeans section
 <<<kmeans>>>=
+require(clusteval)
 
 kmean.fam <- kmeans(dist(metaR[,cols]), centers=26)
 kmean.clust <- kmean.fam$cluster
-
+cluster_similarity(metaR$Family, kmean.clust)
 
 @
 
@@ -55,7 +56,7 @@ require(cluster)
 
 pam.out <- pam(dist(metaR[,cols]), k=26)
 pam.clust <- pam.out$clustering
-
+cluster_similarity(metaR$Family, pam.clust)
 @
 
 
@@ -65,7 +66,7 @@ pam.clust <- pam.out$clustering
 
 hclust.out <- hclust(dist(metaR[,cols]))
 hclust.clust <- cutree(hclust.out, 26)
-
+cluster_similarity(metaR$Family, hclust.clust)
 
 
 @
