@@ -16,6 +16,14 @@ knit_theme$set('print')
 centroids <- read.csv("centroids.csv", header=F)
 birdsfilt <- read.csv("Birds_Filtered_2.csv")
 
+meta <- data.frame(birdsfilt, centroids)
+
+metaR <- meta[meta$Latitude!="NULL",]
+
+##Lat=3, Long=4, cent=15:62
+
+cols <- c(3,4,15:62)
+
 require(xtable)
 @
 
@@ -34,10 +42,8 @@ print(samp.out, file="samp.tex")
 %%%kmeans section
 <<<kmeans>>>=
 
-kmean.out <- kmeans(centroids, centers=98)
-kmean.fam <- kmeans(centroids, centers=26)
-kmean.clust <- kmean.out$cluster
-table(birdsfilt$GenusSpecies,kmean.clust)
+kmean.fam <- kmeans(dist(metaR[,cols]), centers=26)
+kmean.clust <- kmean.fam$cluster
 
 
 @
@@ -47,9 +53,8 @@ table(birdsfilt$GenusSpecies,kmean.clust)
 <<<pam>>>=
 require(cluster)
 
-pam.out <- pam(centroids, k=98, diss=F)
+pam.out <- pam(dist(metaR[,cols]), k=26)
 pam.clust <- pam.out$clustering
-table(birdsfilt$GenusSpecies,pam.clust)
 
 @
 
@@ -58,8 +63,10 @@ table(birdsfilt$GenusSpecies,pam.clust)
 %%%hclust section
 <<<hclust>>>=
 
-hclust.out <- hclust(dist(centroids))
-hclust.clust <- cutree(hclust.out, 98)
+hclust.out <- hclust(dist(metaR[,cols]))
+hclust.clust <- cutree(hclust.out, 26)
+
+
 
 @
 
