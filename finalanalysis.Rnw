@@ -82,15 +82,6 @@ cluster_similarity(metaR$Family, hclust.clust)
 @
 
 
-%%%Rand INdexing??
-<<<compare>>>=
-
-
-
-@
-
-
-
 %%%Final output Table?
 <<<outtable, results='asis'>>>=
 
