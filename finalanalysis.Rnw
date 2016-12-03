@@ -14,6 +14,7 @@ opts_chunk$set(echo = TRUE, comment = NA, width = 80,
 knit_theme$set('print')
 
 centroids <- read.csv("centroids.csv")
+birdsfilt <- read.csv("Birds_Filtered_2.csv")
 
 require(xtable)
 @
@@ -27,8 +28,14 @@ print(samp.out, file="samp.tex")
 @
 
 
+%%%%%Clusters 98
+
+
 %%%kmeans section
 <<<kmeans>>>=
+
+kmean.out <- kmeans(centroids, centers=98)
+kmean.clust <- kmean.out$cluster
 
 
 
