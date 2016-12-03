@@ -1,0 +1,85 @@
+\documentclass{article}
+
+
+\begin{document}
+
+<<setup,echo=FALSE,message=FALSE,cache=FALSE>>=
+require(knitr)
+require(extrafont)
+opts_chunk$set(echo = TRUE, comment = NA, width = 80,
+               fig.width = 6, fig.height = 3,
+               out.width = '6in', out.height = '3in',
+               dev = 'pdf', size = 'footnotesize', fig.align = 'center',
+               dev.args = list(family = 'Helvetica', pointsize = 11))
+knit_theme$set('print')
+
+require(xtable)
+@
+
+<<<tab.samp, results='asis'>>>=
+samp <- matrix(rnorm(20), nrow=4)
+
+samp.out <- xtable(samp)
+
+print(samp.out, file="samp.tex")
+@
+
+
+%%%kmeans section
+<<<kmeans>>>=
+
+
+
+@
+
+
+%%%pam section
+<<<pam>>>=
+
+
+
+@
+
+
+
+%%%hclust section
+<<<hclust>>>=
+
+
+
+@
+
+
+
+%%%mclust section
+<<<mclust>>>=
+
+
+
+
+@
+
+
+%%%Rand INdexing??
+<<<compare>>>=
+
+
+
+@
+
+
+
+%%%Final output Table?
+<<<outtable, results='asis'>>>=
+
+
+
+
+@
+
+
+
+
+
+
+\end{document}
