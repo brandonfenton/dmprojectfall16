@@ -1,0 +1,18 @@
+\documentclass{article}
+
+\begin{document}
+
+
+
+<<<tab.samp, results='asis'>>>=
+
+samp <- matrix(rnorm(20), nrow=4)
+
+samp.out <- xtable(samp)
+
+
+
+@
+
+
+\end{document}
