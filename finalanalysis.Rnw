@@ -13,6 +13,8 @@ opts_chunk$set(echo = TRUE, comment = NA, width = 80,
                dev.args = list(family = 'Helvetica', pointsize = 11))
 knit_theme$set('print')
 
+centroids <- read.csv("centroids.csv")
+
 require(xtable)
 @
 
