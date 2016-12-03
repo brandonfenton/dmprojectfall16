@@ -1,9 +1,6 @@
 \documentclass{article}
 
 
-
-
-
 \begin{document}
 
 <<setup,echo=FALSE,message=FALSE,cache=FALSE>>=
@@ -63,6 +60,22 @@ print(samp.out, file="samp.tex")
 @
 
 
+%%%Rand INdexing??
+<<<compare>>>=
+
+
+
+@
+
+
+
+%%%Final output Table?
+<<<outtable, results='asis'>>>=
+
+
+
+
+@
 
 
 
