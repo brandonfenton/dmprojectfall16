@@ -17,8 +17,11 @@ centroids <- read.csv("centroids.csv", header=F)
 birdsfilt <- read.csv("Birds_Filtered_2.csv")
 
 meta <- data.frame(birdsfilt, centroids)
-
 metaR <- meta[meta$Latitude!="NULL",]
+
+birdsfull <- read.csv("Birds_Filtered.csv")
+meta2 <- data.frame(birdsfull, centroids)
+meta2R <- meta2[meta2$Latitude!="NULL",]
 
 ##Lat=3, Long=4, cent=15:62
 
