@@ -40,52 +40,64 @@ print(samp.out, file="samp.tex")
 
 
 %%%kmeans section
-<<<kmeans>>>=
+<<<clusters>>>=
 require(clusteval)
-
-kmean.fam <- kmeans(dist(metaR[,cols]), centers=26)
-kmean.clust <- kmean.fam$cluster
-cluster_similarity(metaR$Family, kmean.clust)
-
-@
-
-
-%%%pam section
-<<<pam>>>=
 require(cluster)
+require(mclust)
 
-pam.out <- pam(dist(metaR[,cols]), k=26)
-pam.clust <- pam.out$clustering
-cluster_similarity(metaR$Family, pam.clust)
-@
+b=100
+ksums <- matrix(nrow=b, ncol=2)
 
+for(i in 1:b) {
+  kmean.fam <- kmeans(dist(metaR[,cols]), centers=26)
+  kmean.clust <- kmean.fam$cluster
+  ksums[i,1] <- cluster_similarity(metaR$Family, kmean.clust)
+  ksums[i,2] <- cluster_similarity(metaR$Family, kmean.clust, similarity="rand")
+}
+  
+  k.jac <- mean(ksums[,1])
+  k.rand <- mean(ksums[,2])
+  
+  k.jac.se <- sd(ksums[,1])
+  k.rand.se <- sd(ksums[,2])
+  
+  pam.out <- pam(dist(metaR[,cols]), k=26)
+  pam.clust <- pam.out$clustering
+  pam.jac <- cluster_similarity(metaR$Family, pam.clust)
+  pam.rand <- cluster_similarity(metaR$Family, pam.clust, similarity="rand")
 
-
-%%%hclust section
-<<<hclust>>>=
-
-hclust.out <- hclust(dist(metaR[,cols]))
-hclust.clust <- cutree(hclust.out, 26)
-cluster_similarity(metaR$Family, hclust.clust)
-
-
-@
-
-
-
-%%%mclust section
-<<<mclust>>>=
-
-
-
-
+  hclust.out <- hclust(dist(metaR[,cols]))
+  hclust.clustC <- cutree(hclust.out, 26)
+  hC.jac <- cluster_similarity(metaR$Family, hclust.clustC)
+  hC.rand <- cluster_similarity(metaR$Family, hclust.clustC, similarity="rand")
+  
+  hclust.out <- hclust(dist(metaR[,cols]), method="ward.D2")
+  hclust.clustW <- cutree(hclust.out, 26)
+  hW.jac <- cluster_similarity(metaR$Family, hclust.clustW)
+  hW.rand <- cluster_similarity(metaR$Family, hclust.clustW, similarity="rand")
+  
+  hclust.out <- hclust(dist(metaR[,cols]), method="single")
+  hclust.clustS <- cutree(hclust.out, 26)
+  hS.jac <- cluster_similarity(metaR$Family, hclust.clustS)
+  hS.rand <- cluster_similarity(metaR$Family, hclust.clustS, similarity="rand")
+  
+  mclust.out <- Mclust(dist(metaR[,cols]), G=26)
+  mclust.clust <- mclust.out$classification
+  m.jac <- cluster_similarity(metaR$Family, mclust.clust)
+  m.rand <- cluster_similarity(metaR$Family, mclust.clust, similarity="rand")
 @
 
 
 %%%Final output Table?
 <<<outtable, results='asis'>>>=
 
+Jaccard <- c(k.jac, pam.jac, hC.jac, hW.jac, hS.jac, m.jac)
+RandIndex <- c(k.rand, pam.rand, hC.rand, hW.rand, hS.rand, m.rand)
+tab.out <- data.frame(Jaccard, RandIndex)
+methods <- c("KMeans", "PAM", "HC Complete", "HC Ward's", "HC Sinlge", "MClust")
+row.names(tab.out) <- methods
 
+print(xtable(tab.out), file="results.tex")
 
 
 @
